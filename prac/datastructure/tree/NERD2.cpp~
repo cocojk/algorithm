@@ -1,0 +1,78 @@
+#include <map>
+#include <stdio.h>
+
+using namespace std;
+map<int,int> p;
+int solve(int x,int y);
+int isOccupy(int x,int y);
+void removeOccupied(int x,int y);
+int isOccupy(int x,int y)
+{
+	map<int,int>::iterator it = p.lower_bound(x);
+	if(it==p.end())
+		return 0;
+
+	return (it->second>y);
+}
+
+void removeOccupied(int x,int y)
+{
+	map<int,int>::iterator it = p.lower_bound(x);
+	if(it==p.begin())
+		return;
+	it--;
+
+	while(1)
+	{
+		if(it->second>y)
+			break;
+
+		if(it==p.begin())
+		{
+			p.erase(it);
+			break;
+		}
+		else 
+		{
+			map<int,int>::iterator temp= it;
+			temp--;
+			p.erase(it);
+			it = temp;
+		}
+	}
+}
+
+int solve(int x,int y)
+{
+	if(isOccupy(x,y))
+		return p.size();
+	removeOccupied(x,y);
+	p[x]=y;
+	return p.size();
+}
+
+
+int main(void)
+{
+	int testcase;
+	int i,x,y,answer;
+	scanf("%d",&testcase);
+	
+	while(testcase--)
+	{
+		answer=0;
+		scanf("%d",&i);
+		while(i--)
+		{
+			scanf("%d %d",&x,&y);
+			answer+=solve(x,y);
+		}
+
+		printf("%d\n",answer);
+		p.clear();
+	}
+}
+
+
+
+

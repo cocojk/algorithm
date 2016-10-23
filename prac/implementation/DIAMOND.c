@@ -1,0 +1,102 @@
+#include <stdio.h>
+#include <string.h>
+
+int N,M;
+char input[50][51];
+
+#define MAX(i,j) ((i)>(j))?(i):(j)
+int upper(int size,int y,int x);
+int lower(int size,int y,int x);
+
+int upper(int size,int y,int x)
+{
+	int i;
+	int temp;
+
+	if(x<0||y>N-1||x>M-1)
+		return 0;
+
+	for(i=0;i<size;i++)
+	{
+		if(input[y][x+i]!='#')
+			return 0;
+	}
+
+	if(temp=upper(size+2,y+1,x-1))
+	{
+		return temp;
+	}
+	else 
+	{
+		if(lower(size-2,y+1,x+1))
+			return size;
+	}
+
+	return 0;
+}
+
+int lower(int size,int y,int x)
+{
+	int i;
+
+	if(x<0||y>N-1||x>M-1)
+		return 0;
+
+	if(size==1)
+	{
+		if(input[y][x]=='#')
+			return 1;
+		else 
+			return 0;
+	}
+
+	for(i=0;i<size;i++)
+	{
+		if(input[y][x+i]!='#')
+			return 0;
+	}
+
+	return lower(size-2,y+1,x+1);
+}
+
+int main(void)
+{
+	int testcase;
+	int i,j,temp;
+	int max;
+	scanf("%d",&testcase);
+
+	while(testcase--)
+	{	
+		max=0;
+		scanf("%d",&N);
+		for(i=0;i<N;i++)
+		{
+			scanf("%s",input[i]);
+		}
+
+		M = strlen(input[0]);
+		for(i=0;i<N;i++)
+		{
+			for(j=0;j<M;j++)
+			{
+				if(input[i][j]=='#')
+				{	
+					max=MAX(max,1);			
+
+					if(temp=upper(3,i+1,j-1))
+					{
+						//		printf("[y:%d x:%d] size %d \n",i,j,temp);
+						max = MAX(max,temp);
+					}
+
+				}
+			}
+		}
+
+		printf("%d\n",max);
+
+	}
+}
+
+

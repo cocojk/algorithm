@@ -1,0 +1,58 @@
+#include <stdio.h>
+
+int pre[100];
+int in[100];
+
+void requr(int preStart,int preEnd,int inStart,int inEnd)
+{
+	// base case
+	if(!(preStart<=preEnd))
+		return;
+	
+
+	int i;
+	int root = pre[preStart];
+	int index;
+
+	for(i=inStart;i<=inEnd;i++)
+	{
+		if(in[i]==root)
+		{
+			index =i;
+			break;
+		}
+	}
+
+	requr(preStart+1,preStart+(index-inStart),inStart,inStart+(index-inStart-1));
+	requr(preStart+(index-inStart)+1,preEnd,index+1,inEnd);
+
+	printf("%d ",root);
+	return ;
+}
+	
+int main(void)
+{
+	int testcase;
+	int n,i;
+	scanf("%d",&testcase);
+	while(testcase--)
+	{
+		scanf("%d",&n);
+		for(i=0;i<n;i++)
+		{
+			scanf("%d",&pre[i]);
+		}
+		
+		for(i=0;i<n;i++)
+		{
+			scanf("%d",&in[i]);
+		}
+		requr(0,n-1,0,n-1);
+		puts("");
+	}
+}
+
+
+
+	
+
