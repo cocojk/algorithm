@@ -33,7 +33,7 @@ int fastSum(int n) {
 
 // 행렬의 거듭제곱을 구하는 분할 정복 알고리즘
 // n : matrix size , m : power
-// running time : 기존 O(n^3 * m) -> O(n^2 * lgm)
+// running time : 기존 O(n^3 * m) -> O(n^3 * lgm)
 // 정방 행렬을 표현하는 SquareMatrix 클래스가 있다고 가정하자.
 class SquareMatrix;
 // n*n 크기의 항등 행렬(identity matrix)을 반환하는 함수 
